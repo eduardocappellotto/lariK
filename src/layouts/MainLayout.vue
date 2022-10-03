@@ -8,16 +8,11 @@
           {{ nomeRestaurante }}
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header>
-          Essential Links
-        </q-item-label>
-
         <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
       </q-list>
     </q-drawer>
@@ -88,17 +83,27 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
-    const restaurante = ref("Galo Salgaderia")
+    const restaurante = ref({
+      nome: 'Galo Salgaderia',
+      primaryColor: '#ec1d25'
+    })
 
 
     let nomeRestaurante = computed(() => {
-      return restaurante
+      const { nome } = restaurante.value
+      return nome
+    })
+
+    let corPrimaria = computed(() => {
+      const { primaryColor } = restaurante.value
+      return primaryColor
     })
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       nomeRestaurante,
+      corPrimaria,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
